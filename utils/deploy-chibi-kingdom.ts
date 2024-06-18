@@ -2,6 +2,7 @@ import { ethers, run, upgrades } from "hardhat";
 import { Signer } from "ethers";
 import { getTxConfig } from "./get-tx-config";
 import { ChibiKingdom } from "../typechain-types";
+import { logger } from "./logger";
 
 export const deployChibiKingdom = async (publisher: Signer) => {
   const minter = process.env.CHIBI_KINGDOM_MINTER_ADDRESS;
@@ -53,22 +54,24 @@ export const deployChibiKingdom = async (publisher: Signer) => {
     baseUri,
   ]);
   await chibiKingdomContract.waitForDeployment();
-  console.log(`ChibiKingdom contract deployed to ${chibiKingdomContract.target}.
-  Minter address: ${minter}.
-  Treasury address: ${treasury}.
-  Verifier address: ${verifier}.
-  Base price: ${basePrice}.
-  Upgrade start time: ${upgradeStartTime}.
-  Trading start time: ${tradingStartTime}.
-  Land plot supply: ${landPlotSupply}.
-  Base uri: ${baseUri}.`);
+  logger.info(
+    `ChibiKingdom contract deployed to ${chibiKingdomContract.target}.`,
+  );
+  logger.info(`Minter address: ${minter}.`);
+  logger.info(`Treasury address: ${treasury}.`);
+  logger.info(`Verifier address: ${verifier}.`);
+  logger.info(`Base price: ${basePrice}.`);
+  logger.info(`Upgrade start time: ${upgradeStartTime}.`);
+  logger.info(`Trading start time: ${tradingStartTime}.`);
+  logger.info(`Land plot supply: ${landPlotSupply}.`);
+  logger.info(`Base uri: ${baseUri}.`);
 
   if (process.env.VERIFY_CONTRACT === "true") {
     await run(`verify:verify`, {
       address: chibiKingdomContract.target,
       constructorArguments: [],
     });
-    console.log("ChibiKingdom contract verified.");
+    logger.info("ChibiKingdom contract verified.");
   }
 
   return chibiKingdomContract as unknown as ChibiKingdom;

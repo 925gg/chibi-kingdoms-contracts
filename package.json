@@ -50,8 +50,8 @@
   },
   "dependencies": {
     "@imtbl/contracts": "^2.2.4",
-    "@openzeppelin/contracts-upgradeable": "^5.0.2",
     "@openzeppelin/contracts": "^5.0.2",
+    "@openzeppelin/contracts-upgradeable": "^5.0.2",
     "@openzeppelin/hardhat-upgrades": "^3.1.0",
     "axios": "^1.6.8",
     "csv": "^6.3.8",
